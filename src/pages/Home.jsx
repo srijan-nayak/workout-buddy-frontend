@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useWorkoutsContext } from "../hooks/useWorkoutContext";
 import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
@@ -8,18 +8,16 @@ const Home = () => {
 
   useEffect(() => {
     const fetchWorkouts = async () => {
-      console.log(import.meta.env);
       const response = await fetch(
         import.meta.env.VITE_API_URL + "/api/workouts"
       );
-      console.log(response);
       const json = await response.json();
       if (response.ok) {
         dispatch({ type: "SET_WORKOUTS", payload: json });
       }
     };
     fetchWorkouts();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="home">

@@ -3,9 +3,9 @@ import { useWorkoutsContext } from "../hooks/useWorkoutContext";
 
 const WorkoutForm = () => {
   const { dispatch } = useWorkoutsContext();
-  const [title, setTitle] = useState(null);
-  const [load, setLoad] = useState(null);
-  const [reps, setReps] = useState(null);
+  const [title, setTitle] = useState("");
+  const [load, setLoad] = useState("");
+  const [reps, setReps] = useState("");
   const [error, setError] = useState(null);
   const [emptyFields, setEmptyFields] = useState([]);
 
