@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useWorkoutsContext } from "../hooks/useWorkoutContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const WorkoutForm = () => {
   const { dispatch } = useWorkoutsContext();
+  const { user } = useAuthContext();
+
   const [title, setTitle] = useState("");
   const [load, setLoad] = useState("");
   const [reps, setReps] = useState("");
@@ -11,6 +14,12 @@ const WorkoutForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!user) {
+      setError("You must be logged in");
+      return;
+    }
+
     const workout = { title, load, reps };
     const response = await fetch(
       import.meta.env.VITE_API_URL + "/api/workouts",
@@ -19,6 +28,7 @@ const WorkoutForm = () => {
         body: JSON.stringify(workout),
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
         },
       }
     );
